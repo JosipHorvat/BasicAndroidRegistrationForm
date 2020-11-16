@@ -5,12 +5,16 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -30,6 +34,91 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initViews();
+
+        btnPickImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Poslije cu ovo", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initRegister();
+            }
+        });
+    }
+
+
+
+
+    private void initRegister() {
+        Log.d(TAG, "initRegister: Started");
+
+        if(validateData()){
+            if(agreement.isChecked()){
+                showSnackBar();
+            }else{
+                Toast.makeText(this, "You need to agree to my licence agreement ;)", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+    }
+        // If all data is filled corectly user is going to be "registered" and snackbar is going to be showed
+    private void showSnackBar(){
+        Log.d(TAG, "showSnackBar: Started");
+        txtWarnName.setVisibility(View.GONE);
+        txtWarnSurname.setVisibility(View.GONE);
+        txtWarnPassword.setVisibility(View.GONE);
+        txtWarnPassRepeat.setVisibility(View.GONE);
+
+
+
+        Snackbar.make(parent, "User registered", Snackbar.LENGTH_INDEFINITE)
+                .setAction("Dismiss", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        edtTxtName.setText("");
+                        edtTxtSurname.setText("");
+                        edtTxtPassword.setText("");
+                        edtTextPassRepeat.setText("");
+                    }
+                }).show();
+
+    }
+
+
+        // Just a simple method to check if all data is inserted
+    private boolean validateData() {
+        Log.d(TAG, "validateData: Started");
+        if(edtTxtName.getText().toString().equals("")){
+            txtWarnName.setVisibility(View.VISIBLE);
+            txtWarnName.setText("Name field is empty");
+            return false;
+        }
+        if(edtTxtSurname.getText().toString().equals("")){
+            txtWarnSurname.setVisibility(View.VISIBLE);
+            txtWarnSurname.setText("Surname field is empty");
+        return false;
+        }
+        if(edtTxtPassword.getText().toString().equals("")){
+            txtWarnPassword.setVisibility(View.VISIBLE);
+            txtWarnPassword.setText("Password field is empty");
+            return false;
+        }
+        if(edtTextPassRepeat.getText().toString().equals("")){
+            txtWarnPassRepeat.setVisibility(View.VISIBLE);
+            txtWarnPassRepeat.setText("Re-enter password");
+            return false;
+        }
+        if(!edtTxtPassword.getText().toString().equals(edtTextPassRepeat.getText().toString()) ){
+            txtWarnPassRepeat.setVisibility(View.VISIBLE);
+            txtWarnPassRepeat.setText("Pasword does not match");
+            return false;
+        }
+
+        return true;
     }
 
 
