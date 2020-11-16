@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">BasicRegistrationForm</string>
+    
+    <array name="countries">
+        <item>Hrvatska</item>
+        <item>Srbija</item>
+        <item>Bosna i Hercegovina</item>
+        <item>Slovenija</item>
+        <item>Makedonija</item>
+        <item>Crna Gora</item>
+
+    </array>
 </resources>
