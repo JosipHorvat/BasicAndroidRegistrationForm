@@ -17,6 +17,18 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
+
+    /*NOTE:
+    Snackbar textView is to small for all text I am trying to show.  (line 100)
+    Warning messages: txtWarnName etc. stay visible after triggered once. I can do this with Thread to hide messages after few seconds.
+    ImageView is never used, and btnPickImage is showing Toast message.
+
+    There is maybe more bugs I didnt discover, but I have made this simple app for exercise while learning android studio with java.
+    If i decide to make this app better i left this notes when I come back. For now this is just a show of to friends :)
+
+     */
+
+
     private static final String TAG = "MainActivity";
 
     private EditText edtTxtName, edtTxtSurname, edtTxtPassword, edtTextPassRepeat;
@@ -73,9 +85,32 @@ public class MainActivity extends AppCompatActivity {
         txtWarnPassword.setVisibility(View.GONE);
         txtWarnPassRepeat.setVisibility(View.GONE);
 
+        String name = edtTxtName.getText().toString();
+        String surname = edtTxtSurname.getText().toString();
+        String country = countriesSpinner.getSelectedItem().toString();
+        String gender = "";
+        switch (rgGender.getCheckedRadioButtonId()){
+            case R.id.rbMale:
+                gender = "Male";
+                break;
+            case R.id.rbFemale:
+                gender = "Female";
+                break;
+            case R.id.rbOther:
+                gender = "Other";
+                break;
+            default:
+                gender = "";
+            }
 
+            String snackText = "Name :"+ name + "\n" +
+                    "Surname: "+ surname + "\n" +
+                    "Gender: " + gender + "\n" +
+                    "Country: " + country;
 
-        Snackbar.make(parent, "User registered", Snackbar.LENGTH_INDEFINITE)
+        Log.d(TAG, "show snack bar: Snack Bar Text "+ snackText);
+
+        Snackbar.make(parent, "User registered:\n"+ snackText , Snackbar.LENGTH_INDEFINITE)
                 .setAction("Dismiss", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
